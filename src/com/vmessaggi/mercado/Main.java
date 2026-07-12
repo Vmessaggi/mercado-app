@@ -4,22 +4,19 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        Produto leite = new Produto("Leite", "Laticínios", "L");
-        Produto pao = new Produto("Pão", "Padaria", "un");
+        Produto arroz = new Produto("Arroz", "Grãos", "kg", 1.0);
+        Produto feijao = new Produto("Feijão", "Grãos", "kg", 0.5);
 
-        ItemCompra compraLeite = new ItemCompra(leite, 2.0);
-        ItemCompra compraPao = new ItemCompra(pao, 6.0);
+        ItemEstoque estoqueArroz = new ItemEstoque(arroz, 5.0, LocalDate.now());
+        ItemEstoque estoqueFeijao = new ItemEstoque(feijao, 2.0, LocalDate.now());
 
-        ListaDeCompras lista = new ListaDeCompras();
-        lista.adicionarItem(compraLeite);
-        lista.adicionarItem(compraPao);
+        Despensa despensa = new Despensa();
+        despensa.adicionarItem(estoqueArroz);
+        despensa.adicionarItem(estoqueFeijao);
 
-        System.out.println("Antes de marcar comprado:");
-        lista.listarPendentes();
+        estoqueFeijao.consumir(1.7);
 
-        compraLeite.marcarComoComprado();
-
-        System.out.println("Depois de marcar o leite como comprado:");
-        lista.listarPendentes();
+        ListaDeCompras listaGerada = despensa.gerarListaDeCompras();
+        listaGerada.listarPendentes();
     }
 }

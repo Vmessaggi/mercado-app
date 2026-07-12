@@ -26,7 +26,7 @@ public class ListaDeCompras {
     public void listarPendentes() {
         for (ItemCompra item : itens) {
             if (!item.isComprado()) {
-                System.out.println(item.getProduto().getNome() + " - " + item.getQuantidadeDesejada() + item.getProduto().getUnidadeMedida());
+                System.out.println(item.getProduto().getNome() + " - " + Math.round(item.getQuantidadeDesejada() * 100.0) / 100.0 + item.getProduto().getUnidadeMedida());
             }
         }
     }
