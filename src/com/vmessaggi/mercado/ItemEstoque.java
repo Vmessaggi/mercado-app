@@ -25,7 +25,13 @@ public class ItemEstoque {
         return dataCompra;
     }
 
-    public void consumir(double quantidadeConsumida){
+    public void consumir(double quantidadeConsumida) {
+        if (quantidadeConsumida > this.quantidade) {
+            throw new IllegalArgumentException(
+                    "Não é possível consumir " + quantidadeConsumida + produto.getUnidadeMedida() +
+                            ", pois só há " + this.quantidade + produto.getUnidadeMedida() + " em estoque."
+            );
+        }
         this.quantidade -= quantidadeConsumida;
     }
 

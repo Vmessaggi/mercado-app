@@ -5,19 +5,15 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         Produto leite = new Produto("Leite", "Laticínios", "L", 1.0);
+        ItemEstoque estoque = new ItemEstoque(leite, 1.0, LocalDate.now());
 
-        Historico historico = new Historico();
+        try {
+            estoque.consumir(1);
+            System.out.println("Consumo realizado! Quantidade atual: " + estoque.getQuantidade());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro ao consumir: " + e.getMessage());
+        }
 
-        historico.registrarCompra(leite, LocalDate.of(2026, 6, 1));
-        historico.registrarEsgotamento(leite, LocalDate.of(2026, 6, 8));
-
-        historico.registrarCompra(leite, LocalDate.of(2026, 6, 10));
-        historico.registrarEsgotamento(leite, LocalDate.of(2026, 6, 20));
-
-        Double cicloMedio = historico.calcularCicloMedioDias(leite);
-        System.out.println("Ciclo médio do leite: " + cicloMedio + " dias");
-
-        LocalDate previsao = historico.estimarDataEsgotamento(leite);
-        System.out.println("Previsão de esgotamento do leite: " + previsao);
+        System.out.println("Programa continua rodando normalmente depois do erro.");
     }
 }
