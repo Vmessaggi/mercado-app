@@ -26,7 +26,7 @@ public class Historico {
         LocalDate ultimaCompra = null;
 
         for (RegistroHistorico registro : registros) {
-            if (registro.getProduto() == produto) {
+            if (registro.getProduto().equals(produto)) {
                 if (registro.getTipo() == TipoEvento.COMPRA) {
                     ultimaCompra = registro.getData();
                 } else if (registro.getTipo() == TipoEvento.ESGOTAMENTO && ultimaCompra != null) {
@@ -56,7 +56,7 @@ public class Historico {
 
         LocalDate ultimaCompra = null;
         for (RegistroHistorico registro : registros) {
-            if (registro.getProduto() == produto && registro.getTipo() == TipoEvento.COMPRA) {
+            if (registro.getProduto().equals(produto) && registro.getTipo() == TipoEvento.COMPRA) {
                 if (ultimaCompra == null || registro.getData().isAfter(ultimaCompra)) {
                     ultimaCompra = registro.getData();
                 }

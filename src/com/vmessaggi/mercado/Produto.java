@@ -28,4 +28,21 @@ public class Produto {
     public double getQuantidadeMinima() {
         return quantidadeMinima;
     }
+
+    @Override
+    public boolean equals(Object objeto) {
+        if (this == objeto) {
+            return true;
+        }
+        if (objeto == null || getClass() != objeto.getClass()) {
+            return false;
+        }
+        Produto outroProduto = (Produto) objeto;
+        return nome.equals(outroProduto.nome);
+    }
+
+    @Override
+    public int hashCode() {
+        return nome.hashCode();
+    }
 }
