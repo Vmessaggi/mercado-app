@@ -45,4 +45,14 @@ public class Produto {
     public int hashCode() {
         return nome.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "nome='" + nome + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", unidadeMedida='" + unidadeMedida + '\'' +
+                ", quantidadeMinima=" + quantidadeMinima +
+                '}';
+    }
 }
