@@ -4,19 +4,20 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        Produto arroz = new Produto("Arroz", "Grãos", "kg", 1.0);
-        Produto feijao = new Produto("Feijão", "Grãos", "kg", 0.5);
+        Produto leite = new Produto("Leite", "Laticínios", "L", 1.0);
 
-        ItemEstoque estoqueArroz = new ItemEstoque(arroz, 5.0, LocalDate.now());
-        ItemEstoque estoqueFeijao = new ItemEstoque(feijao, 2.0, LocalDate.now());
+        Historico historico = new Historico();
 
-        Despensa despensa = new Despensa();
-        despensa.adicionarItem(estoqueArroz);
-        despensa.adicionarItem(estoqueFeijao);
+        historico.registrarCompra(leite, LocalDate.of(2026, 6, 1));
+        historico.registrarEsgotamento(leite, LocalDate.of(2026, 6, 8));
 
-        estoqueFeijao.consumir(1.7);
+        historico.registrarCompra(leite, LocalDate.of(2026, 6, 10));
+        historico.registrarEsgotamento(leite, LocalDate.of(2026, 6, 20));
 
-        ListaDeCompras listaGerada = despensa.gerarListaDeCompras();
-        listaGerada.listarPendentes();
+        Double cicloMedio = historico.calcularCicloMedioDias(leite);
+        System.out.println("Ciclo médio do leite: " + cicloMedio + " dias");
+
+        LocalDate previsao = historico.estimarDataEsgotamento(leite);
+        System.out.println("Previsão de esgotamento do leite: " + previsao);
     }
 }
