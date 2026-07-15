@@ -15,9 +15,25 @@ public class SistemaMercado {
     }
 
     public void comprarProduto(Produto produto, double quantidade, LocalDate data) {
-        ItemEstoque item = new ItemEstoque(produto, quantidade, data);
-        despensa.adicionarItem(item);
+        ItemEstoque itemExistente = buscarItemPorProduto(produto);
+
+        if (itemExistente != null) {
+            itemExistente.adicionar(quantidade);
+        } else {
+            ItemEstoque novoItem = new ItemEstoque(produto, quantidade, data);
+            despensa.adicionarItem(novoItem);
+        }
+
         historico.registrarCompra(produto, data);
+    }
+
+    private ItemEstoque buscarItemPorProduto(Produto produto) {
+        for (ItemEstoque item : despensa.getItens()) {
+            if (item.getProduto().equals(produto)) {
+                return item;
+            }
+        }
+        return null;
     }
 
     public void consumirProduto(ItemEstoque item, double quantidade, LocalDate data) {

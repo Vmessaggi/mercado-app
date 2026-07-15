@@ -35,6 +35,10 @@ public class ItemEstoque {
         this.quantidade -= quantidadeConsumida;
     }
 
+    public void adicionar(double quantidadeAdicionada) {
+        this.quantidade += quantidadeAdicionada;
+    }
+
     public boolean estaAbaixoDoMinimo(){
         return this.quantidade < produto.getQuantidadeMinima();
     }
