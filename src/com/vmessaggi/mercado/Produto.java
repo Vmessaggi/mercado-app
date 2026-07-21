@@ -1,6 +1,7 @@
 package com.vmessaggi.mercado;
 
 public class Produto {
+    private Integer id;
     private String nome;
     private String categoria;
     private String unidadeMedida;
@@ -11,6 +12,14 @@ public class Produto {
         this.categoria = categoria;
         this.unidadeMedida = unidadeMedida;
         this.quantidadeMinima = quantidadeMinima;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome(){

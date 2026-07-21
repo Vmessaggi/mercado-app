@@ -1,10 +1,6 @@
 package com.vmessaggi.mercado;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +11,7 @@ public class ProdutoRepository {
 
         try (Connection conexao = DriverManager.getConnection(
                 ConfiguracaoBanco.getUrl(), ConfiguracaoBanco.getUsuario(), ConfiguracaoBanco.getSenha());
-             PreparedStatement statement = conexao.prepareStatement(sql)) {
+             PreparedStatement statement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, produto.getNome());
             statement.setString(2, produto.getCategoria());
@@ -23,6 +19,12 @@ public class ProdutoRepository {
             statement.setDouble(4, produto.getQuantidadeMinima());
 
             statement.executeUpdate();
+
+            try (ResultSet chavesGeradas = statement.getGeneratedKeys()) {
+                if (chavesGeradas.next()) {
+                    produto.setId(chavesGeradas.getInt(1));
+                }
+            }
         }
     }
 
