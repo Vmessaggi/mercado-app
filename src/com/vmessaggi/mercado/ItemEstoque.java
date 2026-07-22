@@ -6,11 +6,20 @@ public class ItemEstoque {
     private Produto produto;
     private double quantidade;
     private LocalDate dataCompra;
+    private Integer id;
 
     public ItemEstoque(Produto produto, double quantidade, LocalDate dataCompra){
         this.produto = produto;
         this.quantidade = quantidade;
         this.dataCompra = dataCompra;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Produto getProduto(){

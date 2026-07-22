@@ -2,6 +2,7 @@ package com.vmessaggi.mercado;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -12,22 +13,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         scanner.useLocale(Locale.US);
         boolean continuar = true;
-
-        Produto feijao = new Produto("Feijão", "Grãos", "kg", 0.5);
-
-        ProdutoRepository produtoRepository = new ProdutoRepository();
-        produtoRepository.salvar(feijao);
-        System.out.println("Produto salvo, id: " + feijao.getId());
-
-        ItemEstoque item = new ItemEstoque(feijao, 2.0, LocalDate.now());
-        ItemEstoqueRepository itemRepository = new ItemEstoqueRepository();
-        itemRepository.salvar(item);
-        System.out.println("Item de estoque salvo!");
-
-        RegistroHistorico registro = new RegistroHistorico(feijao, TipoEvento.COMPRA, LocalDate.now());
-        HistoricoRepository historicoRepository = new HistoricoRepository();
-        historicoRepository.salvar(registro);
-        System.out.println("Registro de histórico salvo!");
 
         while (continuar) {
             exibirMenu();
@@ -90,6 +75,8 @@ public class Main {
             System.out.println("Consumo registrado! Quantidade atual: " + item.getQuantidade());
         } catch (IllegalArgumentException e) {
             System.out.println("Erro: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Erro no banco de dados: " + e.getMessage());
         }
     }
 
@@ -131,7 +118,7 @@ public class Main {
         System.out.print("Escolha uma opção: ");
     }
 
-    public static void cadastrarProduto(SistemaMercado sistema, Scanner scanner) {
+public static void cadastrarProduto(SistemaMercado sistema, Scanner scanner) throws SQLException{
         scanner.nextLine();
 
         System.out.print("Nome do produto: ");
