@@ -10,8 +10,7 @@ public class HistoricoRepository {
     public void salvar(RegistroHistorico registro) throws SQLException {
         String sql = "INSERT INTO registro_historico (produto_id, tipo, data_evento) VALUES (?, ?, ?)";
 
-        try (Connection conexao = DriverManager.getConnection(
-                ConfiguracaoBanco.getUrl(), ConfiguracaoBanco.getUsuario(), ConfiguracaoBanco.getSenha());
+        try (Connection conexao = ConexaoFactory.obterConexao();
              PreparedStatement statement = conexao.prepareStatement(sql)) {
 
             statement.setInt(1, registro.getProduto().getId());
@@ -29,8 +28,7 @@ public class HistoricoRepository {
                 "FROM registro_historico rh " +
                 "JOIN produtos p ON rh.produto_id = p.id";
 
-        try (Connection conexao = DriverManager.getConnection(
-                ConfiguracaoBanco.getUrl(), ConfiguracaoBanco.getUsuario(), ConfiguracaoBanco.getSenha());
+        try (Connection conexao = ConexaoFactory.obterConexao();
              PreparedStatement statement = conexao.prepareStatement(sql);
              ResultSet resultado = statement.executeQuery()) {
 

@@ -10,8 +10,7 @@ public class ItemEstoqueRepository {
     public void salvar(ItemEstoque item) throws SQLException {
         String sql = "INSERT INTO item_estoque (produto_id, quantidade, data_compra) VALUES (?, ?, ?)";
 
-        try (Connection conexao = DriverManager.getConnection(
-                ConfiguracaoBanco.getUrl(), ConfiguracaoBanco.getUsuario(), ConfiguracaoBanco.getSenha());
+        try (Connection conexao = ConexaoFactory.obterConexao();
              PreparedStatement statement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setInt(1, item.getProduto().getId());
@@ -31,8 +30,7 @@ public class ItemEstoqueRepository {
     public void atualizarQuantidade(ItemEstoque item) throws SQLException {
         String sql = "UPDATE item_estoque SET quantidade = ? WHERE id = ?";
 
-        try (Connection conexao = DriverManager.getConnection(
-                ConfiguracaoBanco.getUrl(), ConfiguracaoBanco.getUsuario(), ConfiguracaoBanco.getSenha());
+        try (Connection conexao = ConexaoFactory.obterConexao();
              PreparedStatement statement = conexao.prepareStatement(sql)) {
 
             statement.setDouble(1, item.getQuantidade());
@@ -49,8 +47,7 @@ public class ItemEstoqueRepository {
                 "FROM item_estoque ie " +
                 "JOIN produtos p ON ie.produto_id = p.id";
 
-        try (Connection conexao = DriverManager.getConnection(
-                ConfiguracaoBanco.getUrl(), ConfiguracaoBanco.getUsuario(), ConfiguracaoBanco.getSenha());
+        try (Connection conexao = ConexaoFactory.obterConexao();
              PreparedStatement statement = conexao.prepareStatement(sql);
              ResultSet resultado = statement.executeQuery()) {
 

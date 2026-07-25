@@ -30,7 +30,7 @@ public class Despensa {
         for (ItemEstoque item : itens) {
             if (item.estaAbaixoDoMinimo()) {
                 double quantidadeNecessaria = item.getProduto().getQuantidadeMinima() - item.getQuantidade();
-                ItemCompra itemCompra = new ItemCompra(item.getProduto(), quantidadeNecessaria);
+                ItemCompra itemCompra = new ItemCompra(item.getProduto(), item.getProduto().getQuantidadeMinima());
                 lista.adicionarItem(itemCompra);
             }
         }

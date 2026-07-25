@@ -2,6 +2,7 @@ package com.vmessaggi.mercado;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class SistemaMercado {
 
@@ -78,4 +79,19 @@ public class SistemaMercado {
         return historico;
     }
 
+    public void carregarDoBanco() throws SQLException {
+        List<ItemEstoque> itens = itemEstoqueRepository.listarTodos();
+        for (ItemEstoque item : itens) {
+            despensa.adicionarItem(item);
+        }
+
+        List<RegistroHistorico> registros = historicoRepository.listarTodos();
+        for (RegistroHistorico registro : registros) {
+            if (registro.getTipo() == TipoEvento.COMPRA) {
+                historico.registrarCompra(registro.getProduto(), registro.getData());
+            } else {
+                historico.registrarEsgotamento(registro.getProduto(), registro.getData());
+            }
+        }
+    }
 }

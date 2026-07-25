@@ -10,6 +10,7 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         SistemaMercado sistema = new SistemaMercado();
+        sistema.carregarDoBanco();
         Scanner scanner = new Scanner(System.in);
         scanner.useLocale(Locale.US);
         boolean continuar = true;
@@ -72,7 +73,7 @@ public class Main {
 
         try {
             sistema.consumirProduto(item, quantidade, LocalDate.now());
-            System.out.println("Consumo registrado! Quantidade atual: " + item.getQuantidade());
+            System.out.println("Consumo registrado! Quantidade atual: " + Utils.arredondar(item.getQuantidade()));
         } catch (IllegalArgumentException e) {
             System.out.println("Erro: " + e.getMessage());
         } catch (SQLException e) {
@@ -146,7 +147,7 @@ public static void cadastrarProduto(SistemaMercado sistema, Scanner scanner) thr
     public static void listarDespensa(SistemaMercado sistema) {
         System.out.println("\n--- Itens na despensa ---");
         for (ItemEstoque item : sistema.getDespensa().getItens()) {
-            System.out.println(item.getProduto().getNome() + " - " + item.getQuantidade() + item.getProduto().getUnidadeMedida());
+            System.out.println(item.getProduto().getNome() + " - " + Utils.arredondar(item.getQuantidade()) + item.getProduto().getUnidadeMedida());
         }
     }
 
